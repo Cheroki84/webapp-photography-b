@@ -87,13 +87,36 @@ const UserController = {
                     email: req.params.email
                 }
             });
-            res.status(200).send({
+            res.status(201).send({
                 message: 'Hasta pronto',
                 user
             });
         } catch (error) {
             res.status(500).send({
                 message: 'Hubo un problema al intentar cerrar sesión',
+                error
+            })
+        }
+    },
+
+    async delete(req, res) {
+        try {
+            const email = await User.destroy({
+                where: {
+                    email: req.body.email
+                }
+            })
+            if (!email) {
+                return res.status(400).send({
+                    message: 'Cuenta no encontrada'
+                })
+            }
+            res.status(200).send({
+                message: 'Cuenta eliminada satisfactoriamente'
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un problema al intentar eliminar la cuenta',
                 error
             })
         }
