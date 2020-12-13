@@ -74,6 +74,29 @@ const UserController = {
                 error
             })
         }
+    },
+
+    async logout(req, res) {
+        try {
+            const removeToken = {
+                token: ""
+            };
+
+            const user = await User.update(removeToken, {
+                where: {
+                    email: req.params.email
+                }
+            });
+            res.status(200).send({
+                message: 'Hasta pronto',
+                user
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un problema al intentar cerrar sesión',
+                error
+            })
+        }
     }
 }
 
