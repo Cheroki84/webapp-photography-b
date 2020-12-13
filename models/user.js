@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     postalcode: DataTypes.STRING,
     city: DataTypes.STRING,
-    photo: DataTypes.STRING
+    photo: DataTypes.STRING,
+    token: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

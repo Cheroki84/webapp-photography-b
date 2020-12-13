@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const UserController = {
     async register(req, res) {
@@ -32,6 +33,46 @@ const UserController = {
                 message: 'Hubo un error al intentar hacer el registro',
                 error
             });
+        }
+    },
+    
+    async login(req, res) {
+        try {
+            const user = await User.findOne({
+                where: {
+                    email: req.body.email
+                }
+            })
+            if (!user) {
+                return res.status(400).send({
+                    message: 'Error al introducir los datos'
+                });
+            }
+
+            const match = await bcrypt.compare(req.body.password, user.password)
+            if (!match) {
+                return res.status(400).send({
+                    message: 'Error al introducir los datos'
+                });
+            }
+            
+            const token = jwt.sign({
+                id: user.id
+            }, 'esternocleidomastoideo', {
+                expiresIn: '10d'
+            });
+            user.token = token;
+            await user.save();
+            res.status(200).send({
+                message: 'Bienvenid@',
+                user
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un problema al intentar iniciar sesión',
+                error
+            })
         }
     }
 }
