@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Appointment.init({
-    state: DataTypes.STRING,
+    status: {
+      type: DataTypes.ENUM('Reservada', 'Cancelada', 'Modificada'),
+      defaultValue: 'Reservada'
+    },
     type: {
       type: DataTypes.STRING,
       allowNull: false
