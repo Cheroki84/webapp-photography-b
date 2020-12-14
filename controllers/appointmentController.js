@@ -38,6 +38,24 @@ const AppointmentController = {
                 error
             })
         }
+    },
+
+    async delete(req, res) {
+        try {
+            await Appointment.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+            res.status(200).send({
+                message: 'Cita eliminada correctamente'
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un problema al intentar eliminar la cita',
+                error
+            })
+        }
     }
 }
 
