@@ -20,6 +20,24 @@ const AppointmentController = {
             });
         }
         
+    },
+
+    async update(req, res) {
+        try {
+            await Appointment.update(req.body, {
+                where: {
+                    id: req.params.id
+                }
+            })
+            res.status(201).send({
+                message: 'Los datos se han actualizado correctamente'
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un error al intentar actualizar los datos',
+                error
+            })
+        }
     }
 }
 
