@@ -1,4 +1,4 @@
-const { Appointment } = require('../models');
+const { Appointment, User } = require('../models');
 
 const AppointmentController = {
     async create(req, res) {
@@ -53,6 +53,40 @@ const AppointmentController = {
         } catch (error) {
             res.status(500).send({
                 message: 'Hubo un problema al intentar eliminar la cita',
+                error
+            })
+        }
+    },
+
+    async getAll(req, res) {
+        try {
+            const appointments = await Appointment.findAll();
+            res.status(200).send({
+                message: 'Listado de todas las citas',
+                appointments
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un problema al intentar mostrar todas las citas',
+                error
+            })
+        }
+    },
+
+    async getAllWithUsers(req, res) {
+        try {
+            const appointments = await Appointment.findAll({
+                include: {
+                    model: User
+                }
+            });
+            res.status(200).send({
+                message: 'Listado de todas las citas',
+                appointments
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'Hubo un problema al intentar mostrar todas las citas',
                 error
             })
         }
