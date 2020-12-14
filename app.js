@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('./middleware/cors');
+const { sequelize } = require('./models');
 const usersRouter = require('./routes/userRouter');
 
 const app = express();
@@ -22,4 +23,12 @@ app.use('/users', usersRouter);
 
 
 
-app.listen(PORT, () => console.log(`>>>Server UP on port ${PORT}<<<`));
+app.listen(PORT, function () { 
+    console.log(`>>>Server UP on port ${PORT}<<<`);
+    sequelize.sync({ force: false })
+    .then(() => {
+        console.log('>>>Conectado a la base de datos<<<');
+    }).catch((err) => {
+        console.log('Error al intentar conectar a la base de datos', err);
+    })
+});
