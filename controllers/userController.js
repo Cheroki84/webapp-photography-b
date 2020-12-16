@@ -64,10 +64,7 @@ const UserController = {
             });
             user.token = token;
             await user.save();
-            res.status(200).send({
-                message: 'Bienvenid@',
-                user
-            });
+            res.status(200).send(user);
 
         } catch (error) {
             res.status(500).send({
