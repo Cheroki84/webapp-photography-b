@@ -2,23 +2,46 @@ const { User } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-let regExPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+let regExFullName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
 let regExEmail = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/;
+let regExPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+let regExPhone = /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
 
 const UserController = {
     async register(req, res) {
         
+        if(!regExFullName.test(req.body.firstname)) {
+            res.send({
+                message: 'Invalid format for firstname'
+            })
+            return;
+        }
+
+        if(!regExFullName.test(req.body.lastname)) {
+            res.send({
+                message: 'Invalid format for lastname'
+            })
+            return;
+        }
+
         if (!regExEmail.test(req.body.email)) {
             res.send({
-                message: 'El formato del email no es válido'
+                message: 'The email format is not valid'
             });
             return;
         }
 
         if (!regExPassword.test(req.body.password)) {
             res.send({
-                message: 'El password debe contener al menos: entre 8 y 16 caracteres, 1 número, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial'
+                message: 'The password must contain at least: between 8 and 16 characters, 1 number, 1 lowercase letter, 1 capital letter and 1 special character'
             });
+            return;
+        }
+
+        if(!regExPhone.test(req.body.phone)) {
+            res.send({
+                message: 'Invalid format for phone'
+            })
             return;
         }
 
@@ -26,12 +49,12 @@ const UserController = {
             req.body.password = await bcrypt.hash(req.body.password, 10)
             const user = await User.create(req.body);
             res.status(201).send({
-                message: 'Usuario registrado correctamente',
+                message: 'User successfully registered',
                 user
             })
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un error al intentar hacer el registro',
+                message: 'There was an error trying to register',
                 error
             });
         }
@@ -46,14 +69,14 @@ const UserController = {
             })
             if (!user) {
                 return res.status(400).send({
-                    message: 'Error al introducir los datos'
+                    message: 'The data entered is not correct'
                 });
             }
 
             const match = await bcrypt.compare(req.body.password, user.password)
             if (!match) {
                 return res.status(400).send({
-                    message: 'Error al introducir los datos'
+                    message: 'The data entered is not correct'
                 });
             }
             
@@ -68,7 +91,7 @@ const UserController = {
 
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar iniciar sesión',
+                message: 'There was a problem trying to log in',
                 error
             })
         }
@@ -86,12 +109,12 @@ const UserController = {
                 }
             });
             res.status(201).send({
-                message: 'Hasta pronto',
+                message: 'See you soon',
                 user
             });
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar cerrar sesión',
+                message: 'There was a problem trying to log out',
                 error
             })
         }
@@ -106,15 +129,15 @@ const UserController = {
             })
             if (!email) {
                 return res.status(400).send({
-                    message: 'Cuenta no encontrada'
+                    message: 'Account not found'
                 })
             }
             res.status(200).send({
-                message: 'Cuenta eliminada satisfactoriamente'
+                message: 'Account successfully deleted'
             })
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar eliminar la cuenta',
+                message: 'There was a problem trying to delete the account',
                 error
             })
         }
@@ -124,12 +147,12 @@ const UserController = {
         try {
             const users = await User.findAll();
             res.status(200).send({
-                message: 'Listado de todos los usuarios',
+                message: 'List of all users',
                 users
             })
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar mostrar todos los usuarios',
+                message: 'There was a problem trying to display all users',
                 error
             })
         }
@@ -139,14 +162,14 @@ const UserController = {
     
         if (!regExEmail.test(req.body.email)) {
             res.send({
-                message: 'El formato del email no es válido'
+                message: 'The email format is not valid'
             });
             return;
         }
 
         if (!regExPassword.test(req.body.password)) {
             res.send({
-                message: 'El password debe contener al menos: entre 8 y 16 caracteres, 1 número, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial'
+                message: 'The password must contain at least: between 8 and 16 characters, 1 number, 1 lowercase letter, 1 capital letter and 1 special character'
             });
             return;
         }
@@ -159,12 +182,12 @@ const UserController = {
                 }
             });
             res.status(201).send({
-                message: 'Los datos se han actualizado correctamente',
+                message: 'The data has been updated successfully',
                 userUpdate
             })
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un error al intentar actualizar los datos',
+                message: 'There was an error trying to update the data',
                 error
             });
         }

@@ -17,16 +17,6 @@ app.use('/appointments', appointmentRouter);
 
 
 
-
-
-
-
-
-
-
-
-
-
 app.listen(PORT, function () { 
     console.log(`>>>Server UP on port ${PORT}<<<`);
     sequelize.sync({ force: false })

@@ -10,12 +10,12 @@ const AppointmentController = {
                 UserId: req.user.id                
             });
             res.send({
-                message: 'Cita creada correctamente',
+                message: 'Appointment created successfully',
                 appointment
             })    
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un error al intentar crear la cita',
+                message: 'There was an error trying to create the appointment',
                 error
             });
         }
@@ -30,11 +30,11 @@ const AppointmentController = {
                 }
             })
             res.status(201).send({
-                message: 'Los datos se han actualizado correctamente'
+                message: 'The data has been updated successfully'
             });
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un error al intentar actualizar los datos',
+                message: 'There was an error trying to update the data',
                 error
             })
         }
@@ -48,11 +48,11 @@ const AppointmentController = {
                 }
             })
             res.status(200).send({
-                message: 'Cita eliminada correctamente'
+                message: 'Appointment successfully deleted'
             });
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar eliminar la cita',
+                message: 'There was a problem trying to delete the appointment',
                 error
             })
         }
@@ -62,12 +62,12 @@ const AppointmentController = {
         try {
             const appointments = await Appointment.findAll();
             res.status(200).send({
-                message: 'Listado de todas las citas',
+                message: 'List of all appointments',
                 appointments
             })
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar mostrar todas las citas',
+                message: 'There was a problem trying to display all appointments',
                 error
             })
         }
@@ -81,12 +81,12 @@ const AppointmentController = {
                 }
             });
             res.status(200).send({
-                message: 'Listado de todas las citas',
+                message: 'List of all appointments with clients',
                 appointments
             })
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un problema al intentar mostrar todas las citas',
+                message: 'There was a problem trying to display all appointments with clients',
                 error
             })
         }
