@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Dateappointment.init({
-    date: DataTypes.DATE,
+    date: {
+    type: DataTypes.DATE,
+    unique: true
+  },
     status: {
       type: DataTypes.ENUM('Disponible', 'Reservada'),
       defaultValue: 'Disponible'
