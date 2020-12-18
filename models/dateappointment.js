@@ -3,27 +3,25 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Appointment extends Model {
+  class Dateappointment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Appointment.belongsTo(models.User)
-      Appointment.belongsTo(models.Dateappointment)
+      Dateappointment.hasOne(models.Appointment);
     }
   };
-  Appointment.init({
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false
+  Dateappointment.init({
+    date: DataTypes.DATE,
+    status: {
+      type: DataTypes.ENUM('Disponible', 'Reservada'),
+      defaultValue: 'Disponible'
     },
-    price: DataTypes.DECIMAL,
-    observations: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Appointment',
+    modelName: 'Dateappointment',
   });
-  return Appointment;
+  return Dateappointment;
 };

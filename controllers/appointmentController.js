@@ -5,9 +5,9 @@ const AppointmentController = {
         try {
             const appointment = await Appointment.create({
                 type: req.body.type,
-                dateAppointment: req.body.dateAppointment,
                 observations: req.body.observations,
-                UserId: req.user.id                
+                UserId: req.user.id,
+                DateappointmentId: req.body.DateappointmentId
             });
             res.send({
                 message: 'Appointment created successfully',
