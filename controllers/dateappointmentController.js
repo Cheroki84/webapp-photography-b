@@ -35,6 +35,24 @@ const DateappointmentController = {
                 error
             })
         }
+    },
+
+    async delete(req, res) {
+        try {
+            await Dateappointment.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+            res.status(200).send({
+                message: 'Date successfully deleted'
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: 'There was a problem trying to delete the date',
+                error
+            })
+        }
     }
 }
 
