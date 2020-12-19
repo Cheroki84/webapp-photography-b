@@ -37,6 +37,25 @@ const DateappointmentController = {
         }
     },
 
+    async getAvailables(req, res) {
+        try {
+            const availableDates = await Dateappointment.findAll({
+                where: {
+                    status: ['Disponible']
+                }
+            });
+            res.status(200).send({
+                message: 'List of all available appointments',
+                availableDates
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'There was a problem trying to to displya the dates',
+                error
+            })
+        }
+    },
+
     async delete(req, res) {
         try {
             await Dateappointment.destroy({
