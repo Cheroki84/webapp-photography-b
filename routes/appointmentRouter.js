@@ -7,5 +7,6 @@ router.put('/update/:id', auth, AppointmentController.update);
 router.delete('/delete/:id', auth, AppointmentController.delete);
 router.get('/allAppointments', auth, AppointmentController.getAll);
 router.get('/allWithUsers', auth, AppointmentController.getAllWithUsers);
+router.get('/byUserId/:UserId', auth, AppointmentController.getByUserId);
 
 module.exports = router;

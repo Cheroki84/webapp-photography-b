@@ -73,6 +73,26 @@ const AppointmentController = {
         }
     },
 
+    async getByUserId(req, res) {
+        try {
+            const userId = await Appointment.findOne({
+                where: {
+                    UserId: req.params.UserId
+                }
+            })
+            if (!userId) {
+                return res.status(200).send({
+                    message: 'UserId not found'
+                })
+            }
+            res.status(200).send(userId)
+        } catch (error) {
+            res.status(500).send({
+                message: 'There was a problem trying to get the appointment for UserId'
+            })
+        }
+    },
+
     async getAllWithUsers(req, res) {
         try {
             const appointments = await Appointment.findAll({
