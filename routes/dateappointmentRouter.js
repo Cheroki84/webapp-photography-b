@@ -5,5 +5,6 @@ router.post('/create', DateappointmentController.create);
 router.get('/allDates', DateappointmentController.getAll);
 router.delete('/delete/:id', DateappointmentController.delete);
 router.get('/availableDates', DateappointmentController.getAvailables);
+router.put('/update/:id', DateappointmentController.update);
 
 module.exports = router;

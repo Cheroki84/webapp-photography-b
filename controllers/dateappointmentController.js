@@ -1,9 +1,4 @@
-const {
-    Dateappointment
-} = require('../models');
-const {
-    getAll
-} = require('./appointmentController');
+const { Dateappointment } = require('../models');
 
 const DateappointmentController = {
     async create(req, res) {
@@ -20,6 +15,23 @@ const DateappointmentController = {
                 message: 'There was a problem trying to create de date',
                 error
             });
+        }
+    },
+
+    async update(req, res) {
+        try {
+            await Dateappointment.update(req.body, {
+                where: {
+                    id: req.params.id
+                }
+            })
+            res.status(201).send({
+                message: 'The date appointment has been updated succesfully'
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'There was an error trying to update the date appointment'
+            })
         }
     },
 
