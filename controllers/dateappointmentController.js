@@ -49,6 +49,27 @@ const DateappointmentController = {
         }
     },
 
+    async getById(req, res) {
+        try {
+            const userId = await Dateappointment.findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+            if (!userId) {
+                return res.status(200).send({
+                    message: 'Date appointment not found'
+                })
+            }
+            res.status(200).send(userId)
+        } catch (error) {
+            res.status(500).send({
+                message: 'There was a problem trying to get the date appointment',
+                error
+            })
+        }
+    },
+
     async getAvailables(req, res) {
         try {
             const availableDates = await Dateappointment.findAll({

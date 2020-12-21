@@ -4,6 +4,7 @@ const DateappointmentController = require('../controllers/dateappointmentControl
 router.post('/create', DateappointmentController.create);
 router.get('/allDates', DateappointmentController.getAll);
 router.delete('/delete/:id', DateappointmentController.delete);
+router.get('/getById/:id', DateappointmentController.getById);
 router.get('/availableDates', DateappointmentController.getAvailables);
 router.put('/update/:id', DateappointmentController.update);
 
