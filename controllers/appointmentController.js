@@ -58,6 +58,24 @@ const AppointmentController = {
         }
     },
 
+    async deleteByDateAppointmentId(req, res) {
+        try {
+            await Appointment.destroy({
+                where: {
+                    DateappointmentId: req.params.DateappointmentId
+                }
+            })
+            res.status(200).send({
+                message: 'Appointment successfully deleted'
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: 'There was a problem trying to delete the appointment',
+                error
+            })
+        }
+    },
+
     async getAll(req, res) {
         try {
             const appointments = await Appointment.findAll();
