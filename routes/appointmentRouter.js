@@ -8,7 +8,7 @@ router.put('/update/:id', auth, AppointmentController.update);
 router.delete('/delete/:id', auth, AppointmentController.delete);
 router.delete('/deleteByDateAppointmentId/:DateappointmentId', auth, AppointmentController.deleteByDateAppointmentId);
 router.get('/allAppointments', auth, AppointmentController.getAll);
-router.get('/allWithUsers', auth, checkRole(['admin']), AppointmentController.getAllWithUsers);
+router.get('/allWithUserAndDate', auth, checkRole(['admin']), AppointmentController.getAllWithUserAndDate);
 router.get('/byUserId/:UserId', auth, AppointmentController.getByUserId);
 
 module.exports = router;

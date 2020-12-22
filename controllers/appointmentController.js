@@ -1,4 +1,4 @@
-const { Appointment, User } = require('../models');
+const { Appointment, User, Dateappointment } = require('../models');
 
 const AppointmentController = {
     async create(req, res) {
@@ -111,15 +111,21 @@ const AppointmentController = {
         }
     },
 
-    async getAllWithUsers(req, res) {
+    async getAllWithUserAndDate(req, res) {
         try {
             const appointments = await Appointment.findAll({
-                include: {
-                    model: User
-                }
+                attributes:['type', 'observations'],
+                include: [{
+                    model: User,
+                    attributes:['firstname', 'lastname', 'email', 'phone']
+                },
+                {
+                    model: Dateappointment,
+                    attributes: ['date']
+                }]
             });
             res.status(200).send({
-                message: 'List of all appointments with clients',
+                message: 'List of all appointments with client and date',
                 appointments
             })
         } catch (error) {
