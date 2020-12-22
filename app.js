@@ -26,3 +26,5 @@ app.listen(PORT, function () {
         console.log('Error al intentar conectar a la base de datos', err);
     })
 });
+
+/* app.listen(PORT, () => console.log(`Server UP on port ${PORT}`)); */

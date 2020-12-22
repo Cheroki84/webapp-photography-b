@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "sample-for-github",
+    "database": "webapp-photography",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
