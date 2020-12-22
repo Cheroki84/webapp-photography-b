@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Appointment.belongsTo(models.User)
-      Appointment.belongsTo(models.Dateappointment)
+      this.belongsTo(models.User)
+      this.belongsTo(models.Dateappointment)
     }
   };
   Appointment.init({
@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     price: DataTypes.DECIMAL,
-    observations: DataTypes.STRING
+    observations: DataTypes.STRING,
+    UserId: DataTypes.INTEGER,
+    DateappointmentId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Appointment',
