@@ -19,7 +19,7 @@ app.use('/dateappointments', dateappointmentRouter);
 
 app.listen(PORT, function () { 
     console.log(`>>>Server UP on port ${PORT}<<<`);
-    sequelize.sync({ force: false })
+    sequelize.sync({ force: true })
     .then(() => {
         console.log('>>>Conectado a la base de datos<<<');
     }).catch((err) => {
