@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      
+      Appointment.belongsTo(models.User)
+      Appointment.belongsTo(models.Dateappointment)
     }
   };
   Appointment.init({
