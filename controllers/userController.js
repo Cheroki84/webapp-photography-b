@@ -158,6 +158,27 @@ const UserController = {
         }
     },
 
+    async getById(req, res) {
+        try {
+            const userId = await User.findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+            if (!userId) {
+                return res.status(200).send({
+                    message: 'User not found'
+                })
+            }
+            res.status(200).send(userId)
+        } catch (error) {
+            res.status(500).send({
+                message:'There was a problem trying to get the user',
+                error
+            })
+        }
+    },
+
     async update(req, res) {
     
         if (!regExEmail.test(req.body.email)) {
