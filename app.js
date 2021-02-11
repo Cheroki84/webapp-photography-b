@@ -3,6 +3,7 @@ const cors = require('./middleware/cors');
 const usersRouter = require('./routes/userRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
 const dateappointmentRouter = require('./routes/dateappointmentRouter');
+const forgotPasswordRouter = require('./routes/forgotPasswordRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/users', usersRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/dateappointments', dateappointmentRouter);
+app.use('/forgotpassword', forgotPasswordRouter);
 
 
 app.listen(PORT, () => console.log(`Server UP on port ${PORT}`));
