@@ -37,12 +37,14 @@ const ForgotPassword = {
                 }
             });
 
+            const PORT = process.env.PORT || 3000;
+
             const mailOptions = {
                 from: 'bot.elbarquitodepapelfi@gmail.com',
                 to: `${user.email}`,
                 subject: 'Enlace para resetear el password',
                 text:
-                `http://localhost:3005/reset/${token}`
+                `http://localhost:${PORT}/resetpassword/${user.id}/${token}`
             };
 
             transporter.sendMail(mailOptions, (err, response) => {
