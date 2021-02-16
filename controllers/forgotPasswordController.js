@@ -37,28 +37,28 @@ const ForgotPassword = {
                 }
             });
 
-            const PORT = process.env.PORT || 3000;
+            const emailPort = process.env.EMAIL_PORT || 3000;
 
             const mailOptions = {
                 from: 'bot.elbarquitodepapelfi@gmail.com',
                 to: `${user.email}`,
-                subject: 'Enlace para resetear el password',
+                subject: 'Enlace para recuperar su cuenta de El Barquito de Papel - Fotografía Infantil',
                 text:
-                `http://localhost:${PORT}/resetpassword/${user.id}/${token}`
+                `${emailPort}/resetpassword/${user.id}/${token}`
             };
 
             transporter.sendMail(mailOptions, (err, response) => {
                 if (err) {
-                    console.error('hubo un error:', err);
+                    console.error('Ha ocurrido un error:', err);
                 } else {
-                    console.log('esta es la respuesta:', response);
-                    res.status(200).json('email de recuperacion enviado');
+                    console.log('Respuesta:', response);
+                    res.status(200).json('El email para la recuperacion ha sido enviado');
                 }
             })
 
         } catch (error) {
             res.status(500).send({
-                message: 'Hubo un error',
+                message: 'Ha ocurrido un error',
                 error
             })
         }
